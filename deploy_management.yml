@@ -1,0 +1,7 @@
+- hosts: manager
+  tasks:
+    - name: Generate SSH key pair
+      shell: ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""
+      args:
+        creates: /root/.ssh/id_rsa
+    - include : 'roles/deploy_elkstack.yml'

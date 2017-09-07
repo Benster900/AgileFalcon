@@ -1,0 +1,23 @@
+- name: Download Winbeat
+  win_uri:
+    url: https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-5.5.2-windows-x86_64.zip
+  register: C:\temp\winlogbeat-5.5.2-windows-x86_64.zip
+
+- name: Unzip a Winbeat
+  win_unzip:
+    src: C:\temp\winlogbeat-5.5.2-windows-x86_64.zip
+    dest: C:\Program Files\winlogbeat
+    creates:  C:\Program Files\winlogbeat
+
+- name: Set Execution policy to restricted
+  win_shell: Set-ExecutionPolicy Unrestricted
+
+- name: Install Winlogbeat as Windows service
+  win_shell: .\install-service-winlogbeat.ps1
+    args:
+      chdir: C:\Program Files\winlogbeat
+
+- name: Restart a service
+  win_service:
+    name: winlogbeat
+    state: restarted

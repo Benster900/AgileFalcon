@@ -1,0 +1,3 @@
+- hosts: agents
+  tasks:
+    - include : 'roles/deploy_winbeat.yml'
