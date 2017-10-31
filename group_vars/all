@@ -1,2 +1,2 @@
-logstash_domain: elkstask
-logstash_port: 5044
+base_hostname: graylog
+base_domain: hackinglab.beer

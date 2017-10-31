@@ -1,6 +1,6 @@
 # AgileFalcon
 ## Deploy manager
-ansible -i hosts --private-key=<ssh private key> deploy_management.yml
+ansible -i hosts deploy_management.yml -u root
 
 ## Deploy agents
 ansible windows -i hosts deploy_agents.yml

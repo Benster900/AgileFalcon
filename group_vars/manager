@@ -1,3 +1,1 @@
-kibana_user: kibanaadmin
-kibana_pass: Password123*
-kibana_domain: elkstack
+graylog_admin_password: Password123*
