@@ -1,5 +1,5 @@
 - hosts: windows
   tasks:
     - win_ping:
-    - import_tasks: roles/windows/deploy_winbeat.yml
-    - import_tasks: roles/windows/deploy_powershell_logging.yml
+    #- import_tasks: roles/windows/deploy_winbeat.yml
+    #- import_tasks: roles/windows/deploy_powershell_logging.yml
