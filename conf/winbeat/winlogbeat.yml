@@ -1,5 +1,4 @@
 ###################### Winlogbeat Configuration Example ##########################
-
 # This file is an example configuration file highlighting only the most common
 # options. The winlogbeat.reference.yml file from the same directory contains all the
 # supported options with more comments. You can use it as a reference.
@@ -25,8 +24,8 @@ winlogbeat.event_logs:
 
 #==================== Elasticsearch template setting ==========================
 
-setup.template.settings:
-  index.number_of_shards: 3
+#setup.template.settings:
+#  index.number_of_shards: 3
   #index.codec: best_compression
   #_source.enabled: false
 
@@ -62,7 +61,7 @@ setup.template.settings:
 
 # Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
 # This requires a Kibana endpoint configuration.
-setup.kibana:
+#setup.kibana:
 
   # Kibana Host
   # Scheme and port can be left out and will be set to the default (http and 5601)
@@ -101,7 +100,7 @@ setup.kibana:
 #----------------------------- Logstash output --------------------------------
 output.logstash:
   # The Logstash hosts
-  hosts: ["{{ logstash_domain }}:{{ logstash_port }}"]
+  hosts: ["{{ base_hostname}}.{{ base_domain }}:5044"]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications

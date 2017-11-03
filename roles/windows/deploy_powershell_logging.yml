@@ -1,0 +1,14 @@
+####################################################################
+# Enable verbose Powershell logging
+####################################################################
+- name: Enable Powershell module logging
+  win_regedit:
+    path: 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ModuleLogging'
+    name: EnableModuleLogging
+    data: 1
+
+- name: Enable Powershell script block logging
+  win_regedit:
+    path: 'HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging'
+    name: EnableScriptBlockLogging
+    data: 1

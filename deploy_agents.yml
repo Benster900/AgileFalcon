@@ -1,5 +1,5 @@
-- hosts: agents
+- hosts: windows
   tasks:
-    - win_domain_membership:
-      - include: group_vars/windows.yml
-    - include : 'roles/deploy_winbeat.yml'
+    - win_ping:
+    - import_tasks: roles/windows/deploy_winbeat.yml
+    - import_tasks: roles/windows/deploy_powershell_logging.yml

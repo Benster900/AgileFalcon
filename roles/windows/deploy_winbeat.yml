@@ -1,0 +1,42 @@
+####################################################################
+# Install/Setup Winbeat
+####################################################################
+- name: Download Winbeat
+  win_get_url:
+    url: https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-5.6.3-windows-x86_64.zip
+    dest: '%TEMP%\winlogbeat-5.6.3-windows-x86_64.zip'
+
+- name: Unzip a Winbeat
+  win_unzip:
+    src: '%TEMP%\winlogbeat-5.6.3-windows-x86_64.zip'
+    dest: '%TEMP%'
+    creates: '%TEMP%\winlogbeat-5.6.3-windows-x86_64'
+    delete_archive: yes
+
+- win_file:
+    path: 'C:\Program Files\winlogbeat'
+    state: directory
+
+- name: Copy Winbeat contents
+  win_copy:
+    src: '%TEMP%\winlogbeat-5.6.3-windows-x86_64\'
+    dest: 'C:\Program Files\winlogbeat'
+    remote_src: yes
+
+- name: Set Execution policy to restricted
+  win_shell: Set-ExecutionPolicy Unrestricted
+
+- name: Install Winlogbeat as Windows service
+  win_shell: .\install-service-winlogbeat.ps1
+  args:
+    chdir: C:\Program Files\winlogbeat
+
+- name: Copy Winbeat config
+  win_template:
+    src: conf/winbeat/winlogbeat.yml
+    dest: 'C:\Program Files\winlogbeat\winlogbeat.yml'
+
+- name: Restart a service
+  win_service:
+    name: winlogbeat
+    state: restarted

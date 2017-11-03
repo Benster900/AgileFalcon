@@ -140,6 +140,14 @@
     enabled: yes
 
 ####################################################################
+# Install/Setup Graylog slack plugin
+####################################################################
+- name: Download Graylog Slack plugin
+  get_url:
+    url: https://github.com/graylog-labs/graylog-plugin-slack/releases/download/2.4.0/graylog-plugin-slack-2.4.0.jar
+    dest: /usr/share/graylog-server/plugin/graylog-plugin-slack-2.4.0.jar
+
+####################################################################
 # Install/Setup Nginx
 ####################################################################
 - name: Install/Setup Nginx
@@ -217,7 +225,20 @@
     service: http
     permanent: true
     state: enabled
+- firewalld:
+    port: 5044/tcp
+    permanent: true
+    state: enabled
 - service:
     name: firewalld
     state: restarted
     enabled: yes
+
+####################################################################
+#  Slack notification
+####################################################################
+- name: Send slack notification when done
+  slack:
+    token: "{{ slack_token }}"
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Finished setting up FreeIPA agent on {{ ansible_nodename }}'
+    channel: "{{ slack_channel }}"
