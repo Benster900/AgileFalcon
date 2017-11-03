@@ -27,6 +27,7 @@
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 - package: name={{item}} state=installed
   with_items:
+    - epel-release
     - python-pip
     - policycoreutils-python
 
