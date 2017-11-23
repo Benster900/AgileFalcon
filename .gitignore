@@ -1,1 +1,4 @@
 *.retry
+group_vars/all
+group_vars/manager
+group_vars/windows

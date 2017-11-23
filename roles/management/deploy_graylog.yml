@@ -58,7 +58,7 @@
   package:
     name: '{{ item }}'
     state: installed
-  with_items: 
+  with_items:
     - mongodb-org
 
 - name: Start Mongo service
@@ -100,7 +100,7 @@
     name: elasticsearch
     state: restarted
     enabled: yes
-  
+
 ####################################################################
 # Install/Setup Graylog
 ####################################################################
@@ -108,7 +108,7 @@
   yum:
     name: https://packages.graylog2.org/repo/packages/graylog-2.3-repository_latest.rpm
     state: present
-    
+
 - name: Install/Setup Graylog
   package:
     name: '{{ item }}'
@@ -147,13 +147,19 @@
   get_url:
     url: https://github.com/graylog-labs/graylog-plugin-slack/releases/download/2.4.0/graylog-plugin-slack-2.4.0.jar
     dest: /usr/share/graylog-server/plugin/graylog-plugin-slack-2.4.0.jar
+    
+- name: Start and Enable Graylog service
+  service:
+    name: graylog-server
+    state: restarted
+    enabled: yes
 
 ####################################################################
 # Install/Setup Nginx
 ####################################################################
 - name: Install/Setup Nginx
-  package: 
-    name: '{{ item }}' 
+  package:
+    name: '{{ item }}'
     state: installed
   with_items:
     - nginx
@@ -241,5 +247,5 @@
 - name: Send slack notification when done
   slack:
     token: "{{ slack_token }}"
-    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Finished setting up FreeIPA agent on {{ ansible_nodename }}'
+    msg: '{{ ansible_nodename }}:{{ ansible_default_ipv4.address }} - Finished setting up Graylog server on {{ ansible_nodename }}'
     channel: "{{ slack_channel }}"

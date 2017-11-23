@@ -1,0 +1,18 @@
+- nmcli:
+    conn_name: 'Ethernet 2'
+    type: ethernet
+    dns4:
+      - 10.80.100.5
+    state: present
+
+- win_domain_membership:
+      dns_domain_name: hackinglab.beer
+      hostname: mydomainclient
+      domain_admin_user: administrator@hackinglab.club
+      domain_admin_password: password123!
+      domain_ou_path: "OU=Windows,OU=Servers,DC=ansible,DC=vagrant"
+      state: domain
+    register: domain_state
+
+  - win_reboot:
+    when: domain_state.reboot_required
